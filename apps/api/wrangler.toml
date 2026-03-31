@@ -1,0 +1,20 @@
+name = "skills-market-api"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "development"
+
+[[routes]]
+pattern = "api.skills.market/*"
+zone_name = "skills.market"
+
+# KV namespace binding (create with: wrangler kv:namespace create SKILLS_CACHE)
+# [[kv_namespaces]]
+# binding = "SKILLS_CACHE"
+# id = "YOUR_KV_NAMESPACE_ID"
+
+[dev]
+port = 8787
+local_protocol = "http"
