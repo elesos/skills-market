@@ -1,6 +1,10 @@
-import { getCreatorBySlug, getReposByCreator, getSkillsByCreator } from "@/lib/data";
+import { creators, getCreatorBySlug, getReposByCreator, getSkillsByCreator } from "@/lib/data";
 import { RepoCard } from "@/components/repo-card";
 import { SkillCard } from "@/components/skill-card";
+
+export function generateStaticParams() {
+  return ["en", "zh"].flatMap((locale) => creators.map((creator) => ({ locale, slug: creator.slug })));
+}
 
 export default async function CreatorDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;

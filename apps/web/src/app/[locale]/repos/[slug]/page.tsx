@@ -1,5 +1,9 @@
-import { getRepoBySlug, getSkillsByRepo, getCreatorBySlug, creators } from "@/lib/data";
+import { getRepoBySlug, getSkillsByRepo, repos, creators } from "@/lib/data";
 import { SkillCard } from "@/components/skill-card";
+
+export function generateStaticParams() {
+  return ["en", "zh"].flatMap((locale) => repos.map((repo) => ({ locale, slug: repo.slug })));
+}
 
 export default async function RepoDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;

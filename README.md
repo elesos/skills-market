@@ -19,7 +19,26 @@ pnpm dev:api
 ## Deploy targets
 - Frontend: Cloudflare Pages
 - API: Cloudflare Workers
-- Data: D1 (planned next step)
+- Data: D1 (schema included; database creation requires Cloudflare token scope for D1)
+
+## Cloudflare deploy notes
+```bash
+# Frontend build output
+cd apps/web && pnpm build
+# output directory: out/
+
+# Pages
+wrangler pages project create skills-market
+wrangler pages deploy ./out --project-name skills-market
+
+# Workers API
+cd ../api
+wrangler deploy
+
+# D1 (requires token with D1 edit/create permissions)
+wrangler d1 create skills-market-db
+wrangler d1 execute skills-market-db --remote --file ./schema.sql
+```
 
 ## Notes
 This repo currently uses local seed data for both frontend rendering and worker API responses.

@@ -1,6 +1,10 @@
 import { getSkillBySlug, repos, creators, skills } from "@/lib/data";
 import { SkillCard } from "@/components/skill-card";
 
+export function generateStaticParams() {
+  return ["en", "zh"].flatMap((locale) => skills.map((skill) => ({ locale, slug: skill.slug })));
+}
+
 export default async function SkillDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
   const skill = getSkillBySlug(slug);
