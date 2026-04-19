@@ -1,9 +1,15 @@
 import CreatorView from "./creator-view";
 
-const CREATOR_IDS = ["c-1", "c-2", "c-3", "c-4", "c-5", "c-6"];
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://skill-market-api.elesos.cc";
 
 export async function generateStaticParams() {
-  return CREATOR_IDS.map((creator) => ({ creator }));
+  try {
+    const res = await fetch(`${API_BASE}/api/creators`, { cache: "no-store" });
+    const json = await res.json() as { data: { id: string }[] };
+    return json.data.map((c) => ({ creator: c.id }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function CreatorPage({ params }: { params: Promise<{ creator: string }> }) {

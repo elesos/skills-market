@@ -1,22 +1,15 @@
 import RepoView from "./repo-view";
 
-const REPO_PARAMS = [
-  { creator: "c-1", repo: "r-1" },
-  { creator: "c-1", repo: "r-2" },
-  { creator: "c-2", repo: "r-3" },
-  { creator: "c-2", repo: "r-4" },
-  { creator: "c-2", repo: "r-5" },
-  { creator: "c-3", repo: "r-6" },
-  { creator: "c-4", repo: "r-7" },
-  { creator: "c-4", repo: "r-8" },
-  { creator: "c-5", repo: "r-9" },
-  { creator: "c-5", repo: "r-10" },
-  { creator: "c-6", repo: "r-11" },
-  { creator: "c-6", repo: "r-12" },
-];
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://skill-market-api.elesos.cc";
 
 export async function generateStaticParams() {
-  return REPO_PARAMS;
+  try {
+    const res = await fetch(`${API_BASE}/api/repos`, { cache: "no-store" });
+    const json = await res.json() as { data: { id: string; creator_id?: string; creatorId?: string }[] };
+    return json.data.map((r) => ({ creator: r.creatorId ?? r.creator_id ?? "", repo: r.id }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function RepoPage({ params }: { params: Promise<{ creator: string; repo: string }> }) {
