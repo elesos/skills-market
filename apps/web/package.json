@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
+    "deploy": "wrangler pages deploy out --project-name skills-market --branch master",
     "start": "next start",
     "type-check": "tsc --noEmit"
   },

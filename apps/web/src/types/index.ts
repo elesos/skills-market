@@ -21,7 +21,6 @@ export interface Creator {
   handle: string;
   avatar: string;
   bio: string;
-  bio_zh?: string;
   website?: string;
   github?: string;
   twitter?: string;
@@ -39,7 +38,6 @@ export interface Repo {
   slug: string;
   name: string;
   description: string;
-  description_zh?: string;
   creatorId: string;
   creator?: Creator;
   category: SkillCategory;
@@ -48,7 +46,6 @@ export interface Repo {
   stars: number;
   downloads: number;
   isOfficial: boolean;
-  isFeatured: boolean;
   updatedAt: string;
   version: string;
   license: string;
@@ -59,9 +56,7 @@ export interface Skill {
   slug: string;
   name: string;
   description: string;
-  description_zh?: string;
   longDescription?: string;
-  longDescription_zh?: string;
   repoId: string;
   repo?: Repo;
   creatorId: string;
@@ -71,14 +66,11 @@ export interface Skill {
   stars: number;
   downloads: number;
   isOfficial: boolean;
-  isFeatured: boolean;
   version: string;
   updatedAt: string;
   // Skill content
   triggerDescription?: string;
-  triggerDescription_zh?: string;
   exampleUseCases?: string[];
-  exampleUseCases_zh?: string[];
   installCommand?: string;
 }
 

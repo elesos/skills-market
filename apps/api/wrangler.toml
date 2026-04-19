@@ -10,10 +10,10 @@ ENVIRONMENT = "development"
 pattern = "api.skills.market/*"
 zone_name = "skills.market"
 
-# KV namespace binding (create with: wrangler kv:namespace create SKILLS_CACHE)
-# [[kv_namespaces]]
-# binding = "SKILLS_CACHE"
-# id = "YOUR_KV_NAMESPACE_ID"
+[[d1_databases]]
+binding = "DB"
+database_name = "skills-market"
+database_id = "9ea1dce0-a4fb-4458-b41d-a830bddfdf9d"
 
 [dev]
 port = 8787

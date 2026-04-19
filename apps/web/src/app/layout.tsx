@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Skills Market",
-  description: "A bilingual skills directory inspired by official skills ecosystems.",
+  description: "Official skills directory for agents and developers.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

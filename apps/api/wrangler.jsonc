@@ -8,5 +8,12 @@
   },
   "vars": {
     "ENVIRONMENT": "production"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "skills-market",
+      "database_id": "9ea1dce0-a4fb-4458-b41d-a830bddfdf9d"
+    }
+  ]
 }

@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Fcreators\u002F[slug]","\u002Frepos\u002F[slug]","\u002Fskills\u002F[slug]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
