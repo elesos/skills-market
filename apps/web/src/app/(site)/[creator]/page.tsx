@@ -2,13 +2,16 @@ import CreatorView from "./creator-view";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://skill-market-api.elesos.cc";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   try {
     const res = await fetch(`${API_BASE}/api/creators`, { cache: "no-store" });
     const json = await res.json() as { data: { id: string }[] };
-    return json.data.map((c) => ({ creator: c.id }));
+    const params = json.data.map((c) => ({ creator: c.id }));
+    return params.length > 0 ? params : [{ creator: "_" }];
   } catch {
-    return [];
+    return [{ creator: "_" }];
   }
 }
 

@@ -20,7 +20,7 @@ export default function HomePage() {
     <div className="mx-auto max-w-7xl px-6 py-14">
       <div className="mb-10">
         <h1 className="text-4xl font-semibold text-white">Skills Market</h1>
-        <p className="mt-3 text-white/55">Browse skills by creator</p>
+        <p className="mt-3 text-white/55">Browse skills by official creator</p>
       </div>
 
       {loading ? (
