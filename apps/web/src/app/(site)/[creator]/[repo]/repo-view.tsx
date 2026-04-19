@@ -79,6 +79,16 @@ export default function RepoView({ creatorId: _hintC, repoId: _hintR }: { creato
       <div className="mt-6">
         <h1 className="text-3xl font-semibold text-white">{repo.name}</h1>
         <p className="mt-2 text-white/55">{repo.description}</p>
+        {repo.repoUrl && (
+          <a
+            href={repo.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 px-5 py-2 text-sm text-cyan-300 hover:border-cyan-400/60 hover:text-cyan-200 transition"
+          >
+            View Source
+          </a>
+        )}
       </div>
 
       <div className="mt-10">
