@@ -295,23 +295,25 @@ app.delete("/api/admin/repos/:id", async (c) => {
 
 // --- Admin CRUD: Skills ---
 app.post("/api/admin/skills", async (c) => {
-  const body = await c.req.json<{ slug: string; description: string; url?: string; creator_id: string; repo_id: string }>();
+  const body = await c.req.json<{ slug: string; description: string; url?: string; creator_id: string; repo_id?: string }>();
   const id = crypto.randomUUID();
   const now = new Date().toISOString();
   await c.env.DB.prepare(
     "INSERT INTO skills (id, slug, description, updated_at, url, creator_id, repo_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
-  ).bind(id, body.slug, body.description, now, body.url ?? null, body.creator_id, body.repo_id).run();
+  ).bind(id, body.slug, body.description, now, body.url ?? null, body.creator_id, body.repo_id ?? null).run();
   const row = await c.env.DB.prepare("SELECT * FROM skills WHERE id = ?").bind(id).first<Record<string, unknown>>();
   return c.json({ data: mapSkill(row!) }, 201);
 });
 
 app.put("/api/admin/skills/:id", async (c) => {
   const { id } = c.req.param();
-  const body = await c.req.json<{ slug?: string; description?: string; url?: string; creator_id?: string; repo_id?: string }>();
+  const body = await c.req.json<{ slug?: string; description?: string; url?: string; creator_id?: string; repo_id?: string | null }>();
   const now = new Date().toISOString();
+  // repo_id can be explicitly set to null/empty to clear it
+  const repoIdValue = body.repo_id === "" ? null : (body.repo_id ?? undefined);
   await c.env.DB.prepare(
-    "UPDATE skills SET slug = COALESCE(?, slug), description = COALESCE(?, description), url = COALESCE(?, url), creator_id = COALESCE(?, creator_id), repo_id = COALESCE(?, repo_id), updated_at = ? WHERE id = ?"
-  ).bind(body.slug ?? null, body.description ?? null, body.url ?? null, body.creator_id ?? null, body.repo_id ?? null, now, id).run();
+    "UPDATE skills SET slug = COALESCE(?, slug), description = COALESCE(?, description), url = COALESCE(?, url), creator_id = COALESCE(?, creator_id), repo_id = CASE WHEN ? IS NOT NULL THEN ? ELSE repo_id END, updated_at = ? WHERE id = ?"
+  ).bind(body.slug ?? null, body.description ?? null, body.url ?? null, body.creator_id ?? null, repoIdValue ?? null, repoIdValue ?? null, now, id).run();
   const row = await c.env.DB.prepare("SELECT * FROM skills WHERE id = ?").bind(id).first<Record<string, unknown>>();
   if (!row) return c.json({ error: "Not found" }, 404);
   return c.json({ data: mapSkill(row) });

@@ -83,7 +83,7 @@ export default function SkillsView() {
 
   function openEdit(s: Skill) {
     setEditTarget(s);
-    setForm({ slug: s.slug, description: s.description, url: s.url ?? "", creatorId: s.creatorId, repoId: s.repoId });
+    setForm({ slug: s.slug, description: s.description, url: s.url ?? "", creatorId: s.creatorId, repoId: s.repoId ?? "" });
     setModal("edit");
   }
 
@@ -102,7 +102,7 @@ export default function SkillsView() {
         description: form.description,
         url: form.url || undefined,
         creatorId: form.creatorId,
-        repoId: form.repoId,
+        repoId: form.repoId || undefined,
       };
       if (modal === "create") {
         await createSkill(payload);
@@ -198,7 +198,7 @@ export default function SkillsView() {
                   <tr key={s.id} className="border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors">
                     <td className="px-4 py-3 text-white font-mono text-xs">{s.slug}</td>
                     <td className="px-4 py-3 text-white/55">{creatorName(s.creatorId)}</td>
-                    <td className="px-4 py-3 text-white/55">{repoName(s.repoId)}</td>
+                    <td className="px-4 py-3 text-white/55">{s.repoId ? repoName(s.repoId) : <span className="text-white/25">—</span>}</td>
                     <td className="px-4 py-3 text-white/55 max-w-[120px] truncate">
                       {s.url ? <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:text-white">{s.url}</a> : "—"}
                     </td>
@@ -244,14 +244,13 @@ export default function SkillsView() {
               </select>
             </div>
             <div>
-              <label className="mb-1 block text-xs text-white/55">Repo</label>
+              <label className="mb-1 block text-xs text-white/55">Repo <span className="text-white/30">(optional)</span></label>
               <select
                 value={form.repoId}
                 onChange={(e) => setForm({ ...form, repoId: e.target.value })}
-                required
                 className="w-full bg-white/[0.04] border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-white/25 [&>option]:bg-neutral-900 [&>option]:text-white"
               >
-                <option value="">Select repo…</option>
+                <option value="">No repo…</option>
                 {formRepos.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
               </select>
             </div>

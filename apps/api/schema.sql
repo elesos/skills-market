@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS skills (
   updated_at TEXT NOT NULL,
   url TEXT,
   creator_id TEXT NOT NULL,
-  repo_id TEXT NOT NULL,
-  UNIQUE(creator_id, repo_id, slug)
+  repo_id TEXT,
+  UNIQUE(creator_id, slug)
 );
 
 CREATE TABLE IF NOT EXISTS users (

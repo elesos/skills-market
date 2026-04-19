@@ -29,8 +29,12 @@ export default function SkillView({ creatorId, repoId, skillId }: { creatorId: s
         <a href="/" className="hover:text-white">All Creators</a>
         <span>/</span>
         <a href={`/${creatorId}`} className="hover:text-white">{creatorId}</a>
-        <span>/</span>
-        <a href={`/${creatorId}/${repoId}`} className="hover:text-white">{repoId}</a>
+        {repoId && repoId !== "_" && (
+          <>
+            <span>/</span>
+            <a href={`/${creatorId}/${repoId}`} className="hover:text-white">{repoId}</a>
+          </>
+        )}
       </nav>
 
       <div className="mt-6 rounded-[2rem] border border-cyan-400/20 bg-gradient-to-b from-cyan-400/10 to-white/[0.03] p-8">

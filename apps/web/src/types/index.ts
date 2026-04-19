@@ -20,5 +20,5 @@ export interface Skill {
   updatedAt: string;
   url?: string;
   creatorId: string;
-  repoId: string;
+  repoId?: string;
 }

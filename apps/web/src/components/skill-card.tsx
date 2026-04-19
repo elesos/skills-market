@@ -3,7 +3,7 @@ import type { Skill } from "@/types";
 export function SkillCard({ skill }: { skill: Skill }) {
   return (
     <a
-      href={`/${skill.creatorId}/${skill.repoId}/${skill.id}`}
+      href={skill.repoId ? `/${skill.creatorId}/${skill.repoId}/${skill.id}` : `/${skill.creatorId}/${skill.id}`}
       className="flex flex-col rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] p-5 transition hover:border-cyan-400/40"
     >
       <p className="text-base font-semibold text-white font-mono">{skill.slug}</p>

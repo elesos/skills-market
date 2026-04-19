@@ -128,13 +128,13 @@ export async function getSkills(creatorId?: string, repoId?: string): Promise<Sk
 }
 
 export async function createSkill(body: Omit<Skill, "id" | "updatedAt">): Promise<Skill> {
-  const payload = {
+  const payload: Record<string, string | undefined> = {
     slug: body.slug,
     description: body.description,
     url: body.url,
     creator_id: body.creatorId,
-    repo_id: body.repoId,
   };
+  if (body.repoId) payload.repo_id = body.repoId;
   const data = await request<{ data: Skill }>("/api/admin/skills", {
     method: "POST",
     body: JSON.stringify(payload),
