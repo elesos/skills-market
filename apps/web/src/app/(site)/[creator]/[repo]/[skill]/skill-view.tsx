@@ -1,10 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { getSkill } from "@/lib/api";
 import type { Skill } from "@/types";
 
-export default function SkillView({ creatorId, repoId, skillId }: { creatorId: string; repoId: string; skillId: string }) {
+export default function SkillView({ skillId: _hint }: { creatorId: string; repoId: string; skillId: string }) {
+  const pathname = usePathname();
+  const segments = pathname.split("/").filter(Boolean);
+  // skill is always the last segment; creator is first; repo is middle (if 3 segments)
+  const skillId = segments[segments.length - 1] || _hint;
+  const creatorId = segments[0] || "";
+  const repoId = segments.length >= 3 ? segments[1] : undefined;
+
   const [skill, setSkill] = useState<Skill | null>(null);
   const [loading, setLoading] = useState(true);
 

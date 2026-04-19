@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { getCreator } from "@/lib/api";
 import { RepoCard } from "@/components/repo-card";
 import { SkillCard } from "@/components/skill-card";
 import type { Creator, Repo, Skill } from "@/types";
 
-export default function CreatorView({ creatorId }: { creatorId: string }) {
+export default function CreatorView({ creatorId: _hint }: { creatorId: string }) {
+  const pathname = usePathname();
+  const creatorId = pathname.split("/").filter(Boolean)[0] || _hint;
   const [creator, setCreator] = useState<Creator | null>(null);
   const [repos, setRepos] = useState<Repo[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);

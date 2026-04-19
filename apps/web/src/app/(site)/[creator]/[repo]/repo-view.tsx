@@ -1,11 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { getRepo } from "@/lib/api";
 import { SkillCard } from "@/components/skill-card";
 import type { Creator, Repo, Skill } from "@/types";
 
-export default function RepoView({ creatorId, repoId }: { creatorId: string; repoId: string }) {
+export default function RepoView({ creatorId: _hintC, repoId: _hintR }: { creatorId: string; repoId: string }) {
+  const pathname = usePathname();
+  const segments = pathname.split("/").filter(Boolean);
+  const creatorId = segments[0] || _hintC;
+  const repoId = segments[1] || _hintR;
   const [creator, setCreator] = useState<Creator | null>(null);
   const [repo, setRepo] = useState<Repo | null>(null);
   const [skills, setSkills] = useState<Skill[]>([]);

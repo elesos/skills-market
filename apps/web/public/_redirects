@@ -1,5 +1,5 @@
-# Cloudflare Pages fallback: serve existing shell HTML for unknown dynamic paths.
-# Client-side components extract IDs from the real browser URL and fetch from API.
-/:creator/:repo/:skill  /_/_/_.html                                                                     200
-/:creator/:repo         /238e98c0-ac82-4608-b24e-0a5291b54fab/a7a23771-6f90-42e8-ae62-c30f182b2974.html  200
-/:creator               /238e98c0-ac82-4608-b24e-0a5291b54fab.html                                        200
+# Cloudflare Pages: route all dynamic paths to placeholder HTML shells.
+# Client components read the real ID from usePathname() and fetch from API.
+/:creator/:repo/:skill  /_/_/_/  200
+/:creator/:repo         /_/_/    200
+/:creator               /_/      200
