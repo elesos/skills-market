@@ -49,6 +49,8 @@ apps/
 
 ## 2. API Changes (`apps/api/src/index.ts`)
 
+Also add `ADMIN_TOKEN: string` to the `Env` type in `apps/api/src/index.ts`.
+
 ### Auth Middleware
 
 Applied to all routes matching `/api/admin/*`:
@@ -76,17 +78,24 @@ app.use("*", cors({
 }));
 ```
 
+### New Public Read Endpoints (no auth)
+
+- `GET /api/repos` — list all repos (used by admin dropdowns and repo list)
+- `GET /api/skills` — list all skills (used by admin skills list)
+
+Both support optional query params `?creator=<slug>` and (for skills) `?repo=<slug>` for server-side filtering.
+
 ### New Endpoints
 
 #### Creators
 - `POST /api/admin/creators` — body: `{ slug, name, description, avatar_url?, website? }` → INSERT, return new record
 - `PUT /api/admin/creators/:id` — body: same fields (partial) → UPDATE, return updated record
-- `DELETE /api/admin/creators/:id` → DELETE creator + cascade delete repos + skills by creator_slug
+- `DELETE /api/admin/creators/:id` → manually cascade: DELETE skills WHERE creator_slug matches, DELETE repos WHERE creator_slug matches, then DELETE creator
 
 #### Repos
 - `POST /api/admin/repos` — body: `{ slug, name, description, creator_slug }` → INSERT
 - `PUT /api/admin/repos/:id` — body: same fields (partial) → UPDATE
-- `DELETE /api/admin/repos/:id` → DELETE repo + cascade delete skills by creator_slug + repo_slug
+- `DELETE /api/admin/repos/:id` → manually cascade: DELETE skills WHERE creator_slug + repo_slug match, then DELETE repo
 
 #### Skills
 - `POST /api/admin/skills` — body: `{ slug, name, description, long_description?, category, tags_json?, version?, url?, creator_slug, repo_slug }`

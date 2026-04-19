@@ -2,13 +2,12 @@ import type { Repo } from "@/types";
 
 export function RepoCard({ repo }: { repo: Repo }) {
   return (
-    <a href={`/repos/${repo.slug}`} className="group rounded-3xl border border-white/10 bg-slate-900/80 p-5 transition hover:border-cyan-400/40 hover:bg-slate-900">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="text-lg font-semibold text-white">{repo.name}</h3>
-      </div>
-      <p className="mt-3 line-clamp-2 text-sm text-white/70">{repo.description}</p>
-      <div className="mt-4 flex flex-wrap gap-2">{repo.tags.map((tag) => <span key={tag} className="rounded-full border border-white/10 px-2 py-1 text-xs text-white/55">{tag}</span>)}</div>
-      <div className="mt-5 flex items-center justify-between text-xs text-white/55"><span>{repo.totalSkills} skills</span><span>{Math.round(repo.downloads/1000)}k downloads</span></div>
+    <a
+      href={`/${repo.creatorId}/${repo.id}`}
+      className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] p-5 transition hover:border-cyan-400/40"
+    >
+      <h3 className="text-base font-semibold text-white">{repo.name}</h3>
+      <p className="mt-2 line-clamp-2 text-sm text-white/60">{repo.description}</p>
     </a>
   );
 }

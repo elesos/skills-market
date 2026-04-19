@@ -1,8 +1,11 @@
 node_modules/
 .next/
+out/
 dist/
 .turbo/
 *.tsbuildinfo
 .env.local
 .env.*.local
 .wrangler/
+# Local admin seed data — contains hashed credentials, keep off GitHub
+apps/api/seed-admin.sql
